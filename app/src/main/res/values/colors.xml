@@ -7,5 +7,6 @@
     <color name="LoadingBG">#87000000</color>
     <color name="ChatBG">#5c01ecec</color>
     <color name="connBG">#77b7ceff</color>
+    <color name="profileBGwhite">#75ffffff</color>
 
 </resources>

@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void CreateView() {
-        LinearLayout myLayout = (LinearLayout) findViewById(R.id.LLFeedView);
+        LinearLayout myLayout = findViewById(R.id.LLFeedView);
 
         View.OnClickListener clicks = new View.OnClickListener() {
             @Override
@@ -138,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
                 */
             }
         };
+
+
         for (int j = 1; j < total; j++) {
 
             final CardView

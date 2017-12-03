@@ -2,17 +2,17 @@ package ephrine.apps.startupagni;
 
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,25 +20,15 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
-
-
-
-import com.google.firebase.auth.FirebaseAuth;
 
 public class ChatActivity extends AppCompatActivity {
     public String TrainLine;
@@ -55,6 +45,8 @@ public class ChatActivity extends AppCompatActivity {
     public String Username;
     public String UID;
     public int J=-1;
+
+    public String Email;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -75,8 +67,9 @@ public class ChatActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    Username=user.getDisplayName();
-                    UID=user.getUid();
+                    //     Username=user.getDisplayName();
+                    //   UID=user.getUid();
+                    // Email=user.getEmail();
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
                     // User is signed out
@@ -133,9 +126,79 @@ public class ChatActivity extends AppCompatActivity {
             J=PrevChatTotal;
         }
 
+        View.OnClickListener clicks = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final String S = String.valueOf(v.getId());
+
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference Namedata = database.getReference("app/chat/" + S + "/name");
+                Namedata.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String value = dataSnapshot.getValue(String.class);
+                        Log.d(TAG, "name is: " + value);
+
+                        if (value != null) {
+
+                            View ProfileChat = findViewById(R.id.ViewChatProfilePopUp);
+                            ProfileChat.setVisibility(View.VISIBLE);
+                            TextView NameTx = findViewById(R.id.textViewUserName);
+                            NameTx.setText(value);
+                            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),
+                                    R.anim.slideup);
+
+                            CardView ChatCardViewProfile = findViewById(R.id.ChatCardViewProfile);
+                            ChatCardViewProfile.startAnimation(animation);
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // Failed to read value
+                        Log.w(TAG, "Failed to read value.", error.toException());
+                    }
+                });
+
+                final DatabaseReference Emaildata = database.getReference("app/chat/" + S + "/email");
+                Emaildata.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String value = dataSnapshot.getValue(String.class);
+                        Log.d(TAG, "email is: " + value);
+
+                        if (value != null) {
+
+                            View ProfileChat = findViewById(R.id.ViewChatProfilePopUp);
+                            ProfileChat.setVisibility(View.VISIBLE);
+
+                            TextView EmailTx = findViewById(R.id.textViewUserEmail);
+                            EmailTx.setText(value);
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // Failed to read value
+                        Log.w(TAG, "Failed to read value.", error.toException());
+                    }
+                });
+
+            }
+        };
+
+
 
         for (int j = J; j < t; j++) {
-            LinearLayout ChatViewScroll=(LinearLayout)findViewById(R.id.ChatViewScroll);
+            LinearLayout ChatViewScroll = findViewById(R.id.ChatViewScroll);
             final CardView ChatCard = new CardView(ChatActivity.this);
             ChatCard.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -144,6 +207,7 @@ public class ChatActivity extends AppCompatActivity {
             ChatCard.setCardElevation(4);
             ChatCard.setUseCompatPadding(true);
             ChatCard.setId(j);
+            ChatCard.setOnClickListener(clicks);
             ChatViewScroll.addView(ChatCard);
 
             LinearLayout LL1 = new LinearLayout(ChatActivity.this);
@@ -291,7 +355,7 @@ public class ChatActivity extends AppCompatActivity {
                 }
             });
             UID.keepSynced(true);
-            final ScrollView sc=(ScrollView)findViewById(R.id.ScrollView);
+            final ScrollView sc = findViewById(R.id.ScrollView);
             sc.scrollTo(0, sc.getBottom());
             // Footer.requestFocus();
             sc.fullScroll(View.FOCUS_DOWN);
@@ -348,7 +412,7 @@ public class ChatActivity extends AppCompatActivity {
         Time=Hour+":"+Min+" "+AMPM;
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        EditText MsgBox=(EditText)findViewById(R.id.MsgBox);
+        EditText MsgBox = findViewById(R.id.MsgBox);
         String box=MsgBox.getText().toString();
         if(box==null || box.equals(" ") || box.equals("") || box.equals(null)){
 
@@ -370,7 +434,8 @@ public class ChatActivity extends AppCompatActivity {
             CreateUID.setValue(UID);
             DatabaseReference CreateTime = database.getReference("app/chat/"+ChatTotal+"/time");
             CreateTime.setValue(Time);
-
+            DatabaseReference EmailData = database.getReference("app/chat/" + ChatTotal + "/email");
+            EmailData.setValue(Email);
 
             MsgBox.setText("");
         }
@@ -389,7 +454,7 @@ public class ChatActivity extends AppCompatActivity {
     public void InternetCheck(){
         DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
 
-        final TextView LoadingTX=(TextView)findViewById(R.id.textViewLoading);
+        final TextView LoadingTX = findViewById(R.id.textViewLoading);
 
         connectedRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -419,8 +484,8 @@ public class ChatActivity extends AppCompatActivity {
     public void RedOffline(){
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
             // Do something for lollipop and above versions
-            final ImageView IMGloading=(ImageView)findViewById(R.id.imageViewLoading);
-            final TextView LoadingTX=(TextView)findViewById(R.id.textViewLoading);
+            final ImageView IMGloading = findViewById(R.id.imageViewLoading);
+            final TextView LoadingTX = findViewById(R.id.textViewLoading);
             final Drawable RedImg=getDrawable(R.drawable.reddot);
             final Drawable GreenImg=getDrawable(R.drawable.greendot);
             IMGloading.setImageDrawable(RedImg);
@@ -428,19 +493,65 @@ public class ChatActivity extends AppCompatActivity {
 
 
         } else{
-            final ImageView IMGloading=(ImageView)findViewById(R.id.imageViewLoading);
+            final ImageView IMGloading = findViewById(R.id.imageViewLoading);
             IMGloading.setVisibility(View.GONE);
             // do something for phones running an SDK before lollipop
         }
     }
 
+    public void ChatsClose(View v) {
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.slidedown);
+        CardView ChatCardViewProfile = findViewById(R.id.ChatCardViewProfile);
+
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+                View ProfileChat = findViewById(R.id.ViewChatProfilePopUp);
+                ProfileChat.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        ChatCardViewProfile.startAnimation(animation);
+
+
+    }
     public void GreenOnline(){
-}
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            // Do something for lollipop and above versions
+            final ImageView IMGloading = findViewById(R.id.imageViewLoading);
+            final TextView LoadingTX = findViewById(R.id.textViewLoading);
+            final Drawable RedImg = getDrawable(R.drawable.reddot);
+            final Drawable GreenImg = getDrawable(R.drawable.greendot);
+            IMGloading.setImageDrawable(GreenImg);
+            LoadingTX.setText("Connected ");
+
+
+        } else {
+            final ImageView IMGloading = findViewById(R.id.imageViewLoading);
+            IMGloading.setVisibility(View.GONE);
+            // do something for phones running an SDK before lollipop
+        }
+    }
 
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        Username = currentUser.getDisplayName();
+        UID = currentUser.getUid();
+        Email = currentUser.getEmail();
     }
     @Override
     public void onStop() {
