@@ -29,7 +29,13 @@
 }
 
 # for DexGuard only
--keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+#-keepresourcexmlelements manifest/application/meta-data@value=GlideModule
 
 -keepattributes Signature
 -keepattributes *Annotation*
+
+-ignorewarnings
+
+-keep class * {
+    public private *;
+}
