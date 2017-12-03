@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ff9800</color>
+    <color name="colorPrimaryDark">#e65100</color>
+    <color name="colorAccent">#f7e013</color>
+    <color name="loadingBGtrans">#9d6f6f6f</color>
+    <color name="LoadingBG">#87000000</color>
+    <color name="ChatBG">#5c01ecec</color>
+    <color name="connBG">#77b7ceff</color>
+
+</resources>

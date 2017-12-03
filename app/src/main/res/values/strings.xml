@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">StartUp Agni</string>
+
+    <!-- Facebook-->
+    <string name="facebook_app_id">1748354085460039</string>
+    <string name="fb_login_protocol_scheme">fb1748354085460039</string>
+    <string name="google_default_web_client_id">904170905330-u7ecnu5d7k8p6g33miebl8usrev7mcg1.apps.googleusercontent.com</string>
+
+</resources>
