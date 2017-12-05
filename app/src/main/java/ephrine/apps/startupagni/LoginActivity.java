@@ -339,6 +339,8 @@ pw.setVisibility(View.GONE);
 }
 
 public void EmailAccountCreate(View v){
+
+
     final EditText UserNameET=(EditText)findViewById(R.id.editText3);
     EditText UserEmailET=(EditText)findViewById(R.id.editText);
     EditText UserPassword=(EditText)findViewById(R.id.editText2);
@@ -382,7 +384,6 @@ if(UserNameET.getText().toString()!=null && UserEmailET.getText().toString()!=nu
 
                     }
 
-                    // ...
                 }
             });
 

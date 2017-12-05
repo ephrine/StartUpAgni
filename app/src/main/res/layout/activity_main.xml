@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ephrine.apps.startupagni.MainActivity">
+    tools:context="ephrine.apps.startupagni.MainActivity"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -22,11 +24,67 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <android.support.v7.widget.CardView
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:cardElevation="10dp"
+                    app:cardUseCompatPadding="true"
+                    app:contentPadding="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.facebook.login.widget.ProfilePictureView
+                            android:id="@+id/friendProfilePicture"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_gravity="center"
+                            android:gravity="center_horizontal"
+                            android:padding="1sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:paddingLeft="10dp">
+
+                            <TextView
+                                android:id="@+id/textView8"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Welcome,"
+                                android:textSize="14sp"
+                                android:textStyle="bold|italic" />
+
+                            <TextView
+                                android:id="@+id/textViewName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="User Name"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView7Email"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Email ID" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
                 <LinearLayout
                     android:id="@+id/LLConsole"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <Button
                         android:id="@+id/button2"
@@ -40,55 +98,21 @@
                     android:id="@+id/LLFeedView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="60dp">
 
-                    <android.support.v7.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        app:cardElevation="5dp"
-                        app:cardUseCompatPadding="true"
-                        app:contentPadding="2dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/imageView"
-                                android:layout_width="match_parent"
-                                android:layout_height="200dp"
-                                android:layout_gravity="center"
-                                app:srcCompat="@android:color/holo_blue_bright" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="TextView"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/textView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="TextView" />
-
-                            <Button
-                                android:id="@+id/button"
-                                style="@style/Widget.AppCompat.Button.Colored"
-                                android:layout_width="wrap_content"
-                                android:layout_height="40dp"
-                                android:layout_gravity="right"
-                                android:text="Share" />
-
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
                 </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="@string/Ads_app_banner_unit_id">
+    </com.google.android.gms.ads.AdView>
 </RelativeLayout>

@@ -16,6 +16,15 @@
             android:orientation="vertical"
             android:padding="10dp">
 
+            <TextView
+                android:id="@+id/textView13Success"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Warning: Do Not leave Textbox Empty otherwise Blank Post will be created"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_orange_dark"
+                android:textStyle="bold" />
+
             <EditText
                 android:id="@+id/editTextTitle"
                 android:layout_width="match_parent"
@@ -30,6 +39,14 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Description"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/EditTextBlogPostURL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Blog Post URL"
                 android:inputType="textPersonName" />
 
             <EditText
@@ -51,6 +68,7 @@
                 android:layout_gravity="right"
                 android:onClick="postit"
                 android:text="Post it " />
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

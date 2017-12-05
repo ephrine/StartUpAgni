@@ -1,10 +1,13 @@
 package ephrine.apps.startupagni;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -51,32 +54,59 @@ public class AddPostActivity extends AppCompatActivity {
 
     public void postit(View v) {
 
-        EditText TitleET = (EditText) findViewById(R.id.editTextTitle);
-        EditText DescET = (EditText) findViewById(R.id.editTextDescription);
-        EditText URLET = (EditText) findViewById(R.id.editTextURL);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         DatabaseReference TitleData = database.getReference("blogpost/" + Total + "/title");
         DatabaseReference DescData = database.getReference("blogpost/" + Total + "/desc");
         DatabaseReference UrlData = database.getReference("blogpost/" + Total + "/img");
+        DatabaseReference BlogUrlData = database.getReference("blogpost/" + Total + "/url");
+
         DatabaseReference TotalData = database.getReference("blogpost/total");
 
-        if (TitleET.getText().toString() != null && DescET.getText().toString() != null) {
+        EditText TitleET = (EditText) findViewById(R.id.editTextTitle);
+        EditText DescET = (EditText) findViewById(R.id.editTextDescription);
+        EditText URLET = (EditText) findViewById(R.id.editTextURL);
+        EditText BlogPostURL=(EditText)findViewById(R.id.EditTextBlogPostURL);
 
             TitleData.setValue(TitleET.getText().toString());
             DescData.setValue(DescET.getText().toString());
+BlogUrlData.setValue(BlogPostURL.getText().toString());
+        UrlData.setValue(URLET.getText().toString());
 
-            if (URLET.getText().toString() != null) {
-                UrlData.setValue(URLET.getText().toString());
-            } else {
-                UrlData.setValue("https://s3.amazonaws.com/culturesurvey.greatplacetowork.com/public/prd_photos_v11/GHQ_Building_WWT_060-1800x1200_caphoto22999.jpg");
-            }
+               // UrlData.setValue(" ");
+                //UrlData.setValue("https://s3.amazonaws.com/culturesurvey.greatplacetowork.com/public/prd_photos_v11/GHQ_Building_WWT_060-1800x1200_caphoto22999.jpg");
+
 
             TotalData.setValue(String.valueOf(TotalInt));
+            Success();
 
-        } else {
-            Log.d(TAG, "Empty Value!");
         }
+
+
+        public void Success(){
+            EditText TitleET = (EditText) findViewById(R.id.editTextTitle);
+            EditText DescET = (EditText) findViewById(R.id.editTextDescription);
+            EditText URLET = (EditText) findViewById(R.id.editTextURL);
+            EditText BlogPostURL=(EditText)findViewById(R.id.EditTextBlogPostURL);
+
+
+  /*         BlogPostURL.setText(" ");
+            TitleET.setText(" ");
+            DescET.setText(" ");
+            URLET.setText(" ");
+*/
+
+            BlogPostURL.setVisibility(View.INVISIBLE);
+            TitleET.setVisibility(View.INVISIBLE);
+            DescET.setVisibility(View.INVISIBLE);
+            URLET.setVisibility(View.INVISIBLE);
+
+            TextView tx=(TextView)findViewById(R.id.textView13Success);
+            tx.setVisibility(View.VISIBLE);
+            tx.setText("New Blog Post has been added Successfully :)");
+
+            tx.setTextColor(Color.parseColor("#ff669900"));
     }
-}
+    }
+

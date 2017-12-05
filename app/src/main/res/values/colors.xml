@@ -8,5 +8,7 @@
     <color name="ChatBG">#5c01ecec</color>
     <color name="connBG">#77b7ceff</color>
     <color name="profileBGwhite">#75ffffff</color>
+    <color name="errorRed">#ffcc0000</color>
+    <color name="successGreen">#ff669900</color>
 
 </resources>

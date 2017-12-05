@@ -15,6 +15,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,11 +28,16 @@ public class BrowserActivity extends Activity {
     public String TAG = "Startup Agni";
 public String url;
 public View LoadingView;
-    @Override
+public String BlogTitle;
+public String BlogURL;
+    private AdView mAdView;
+
+
+@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browser);
-
+AdsLoad();
         // Receive Data
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
@@ -38,6 +46,8 @@ public View LoadingView;
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference URLdata = database.getReference("blogpost/" + s + "/url");
+        DatabaseReference Titledata = database.getReference("blogpost/" + s + "/title");
+
         URLdata.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -48,8 +58,31 @@ public View LoadingView;
 
                 if (value != null) {
                     url=value;
+                    BlogURL=value;
                     LoadWeb();
 
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+        Titledata.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                String value = dataSnapshot.getValue(String.class);
+                Log.d(TAG, "URL is: " + value);
+
+                if (value != null) {
+                   BlogTitle=value;
 
                 }
 
@@ -116,5 +149,21 @@ public View LoadingView;
             LoadingView=(View)findViewById(R.id.LoadingView);
             LoadingView.setVisibility(View.INVISIBLE);
         }
+    }
+
+public void share(View v){
+    Intent sendIntent = new Intent();
+    sendIntent.setAction(Intent.ACTION_SEND);
+    sendIntent.putExtra(Intent.EXTRA_TEXT, BlogTitle+" "+BlogURL+" . Shared via StartUpAgni App https://goo.gl/suxeTk");
+    sendIntent.setType("text/plain");
+    startActivity(sendIntent);
+}
+
+    public void AdsLoad(){
+        MobileAds.initialize(this, getString(R.string.Ads_app_id));
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 }

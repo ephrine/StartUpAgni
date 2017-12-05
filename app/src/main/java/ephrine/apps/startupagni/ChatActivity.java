@@ -20,8 +20,16 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.facebook.Profile;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,6 +58,9 @@ public class ChatActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    public String ProfilePicUrl;
+
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +68,7 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
 
-
+AdsLoad();
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         InternetCheck();
         mAuth = FirebaseAuth.getInstance();
@@ -182,6 +193,33 @@ public class ChatActivity extends AppCompatActivity {
 
                         }
 
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // Failed to read value
+                        Log.w(TAG, "Failed to read value.", error.toException());
+                    }
+                });
+
+                final DatabaseReference ProfilePicdata = database.getReference("app/chat/" + S + "/pic");
+                ProfilePicdata.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String value = dataSnapshot.getValue(String.class);
+                        Log.d(TAG, "FB pic: " + value);
+
+                        if (value != null) {
+
+                            View ProfileChat = findViewById(R.id.ViewChatProfilePopUp);
+                            ProfileChat.setVisibility(View.VISIBLE);
+
+                            ImageView Pic=(ImageView)findViewById(R.id.imageView8ProfilePic);
+                            Glide.with(ChatActivity.this).load(value).into(Pic);
+
+
+                        }
 
                     }
 
@@ -436,6 +474,9 @@ public class ChatActivity extends AppCompatActivity {
             CreateTime.setValue(Time);
             DatabaseReference EmailData = database.getReference("app/chat/" + ChatTotal + "/email");
             EmailData.setValue(Email);
+            DatabaseReference ProfilePicData = database.getReference("app/chat/" + ChatTotal + "/pic");
+ProfilePicData.setValue(ProfilePicUrl);
+
 
             MsgBox.setText("");
         }
@@ -552,6 +593,21 @@ public class ChatActivity extends AppCompatActivity {
         Username = currentUser.getDisplayName();
         UID = currentUser.getUid();
         Email = currentUser.getEmail();
+
+        FirebaseAuth.getInstance().getCurrentUser().getProviderId();
+        for (UserInfo user: FirebaseAuth.getInstance().getCurrentUser().getProviderData()) {
+            if (user.getProviderId().equals("facebook.com")) {
+                System.out.println("User is signed in with Facebook");
+                String ProfileID= Profile.getCurrentProfile().getId().toString();
+                //   String ProfilePicUrl="http://graph.facebook.com/"+ProfileID+"/picture?type=large&width=720&height=720";
+                // Picasso.with(this).load(ProfilePicUrl).into(ProfilePic);
+                //  ProfilePictureView profilePictureView;
+                //profilePictureView = (ProfilePictureView) findViewById(R.id.friendProfilePicture);
+                //profilePictureView.setProfileId(ProfileID);
+ProfilePicUrl="http://graph.facebook.com/"+ProfileID+"/picture?type=large&width=720&height=720";
+Log.d(TAG,"FB Profile Pic URL: " + ProfilePicUrl);
+            }
+        }
     }
     @Override
     public void onStop() {
@@ -559,5 +615,13 @@ public class ChatActivity extends AppCompatActivity {
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
+    }
+
+    public void AdsLoad(){
+        MobileAds.initialize(this, getString(R.string.Ads_app_id));
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 }

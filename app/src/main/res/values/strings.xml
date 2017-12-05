@@ -1,9 +1,37 @@
 <resources>
     <string name="app_name">StartUp Agni</string>
+    <string name="app_version">Version 1.0.0</string>
+    <string name="partner_desc">StartUpAgni.com App is made in Partnership with Ephrine Apps</string>
+
+    <string name="about_desc">“Necessity is the mother of all inventions” is an adage that everyone is familiar. It is the need to make things better and easier that forces an individual to think about something new. It is the need for being different and disruptive in the market that creates this zeal and determination. An indomitable spirit called ‘Entrepreneurship’ whose flame is one lit never fades. \n
+\n
+Entrepreneurship has been a bug which has smitten young and old these days. This entire concept has changed the notion of risk-taking. Fear of failure is no longer a dreaded phobia. Organisations like Flipkart and Snapdeal which transformed from Startups to Unicorns have been an inspiration to starters. \n
+\n
+The recent Modi government has been working on transforming our country from a job seeker society to job provider economy. Prime Minister’s initiatives such as ‘Make In India’, ‘Digital India’, ‘Skill India’ and the recent budget allocation towards the small and medium scale enterprises have been baby steps towards fostering an entrepreneurial mindset. Similarly, with more relaxation on FDI and FIIs, more and more critical resources are becoming easily accessible to Indians and has greatly contributed to the improvement in rankings of ‘Ease of Doing Business’ in India thereby making our country a land worth considering for investment by foreigners. \n
+\n
+We might be a second world country with third world problems but with the policies and grants in place, we are not far from becoming a first world country. If you have an idea, you can dream of it, invest in it and who knows, it can kick off! In short, if you are considering of doing something on your own, this is the right time. \n
+\n
+This blog aims to be a one-stop destination for all the budding entrepreneurs by providing all necessary information that we feel you must have. Beyond this, if you want us to feature something that you would like to hear, please feel free to drop your ideas at contact@startupagni.com. Till then, Au Revoir! \n
+    </string>
+    <string name="taher1">I am a Start-up enthusiast and working professional, just like you. I have started this blog startupagni to share my experiences as a startup lover with all of you.</string>
+<string name="taher"> In today’s world, doing regular odd jobs is boring and difficult. Through my blogs, I wanted to tell you that we are not alone in this journey. Let’s unite and flourish the startup culture.</string>
 
     <!-- Facebook-->
     <string name="facebook_app_id">1748354085460039</string>
     <string name="fb_login_protocol_scheme">fb1748354085460039</string>
     <string name="google_default_web_client_id">904170905330-u7ecnu5d7k8p6g33miebl8usrev7mcg1.apps.googleusercontent.com</string>
+
+    <!-- Ads IDs-->
+
+<!-- Original Ad IDs-->
+    <string name="Ads_app_id">ca-app-pub-6702661245453687~7275376132</string>
+    <string name="Ads_app_banner_unit_id">ca-app-pub-6702661245453687/9073465544</string>
+    <string name="Ads_app_int_unit_id">ca-app-pub-6702661245453687/1145082055</string>
+   -->
+    <!-- Test Ad IDS
+    <string name="Ads_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="Ads_app_banner_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="Ads_app_int_unit_id">ca-app-pub-3940256099942544/1033173712</string>
+-->
 
 </resources>
