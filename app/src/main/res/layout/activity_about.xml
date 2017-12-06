@@ -95,7 +95,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="5dp"
-                        android:text="About StartUpAgni.com"
+                        android:text="About StartupAgni.com"
                         android:textStyle="bold|italic" />
 
                     <TextView

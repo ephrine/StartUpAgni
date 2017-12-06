@@ -439,7 +439,7 @@ int h=100;
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser!=null){
-            Log.d(TAG, "User Account True");
+            Log.d(TAG, "User Account True: "+currentUser.getEmail()+" ");
 AdminConsole();
             if(currentUser.getUid().toString().equals("")){
                 LinearLayout LLConsole=(LinearLayout)findViewById(R.id.LLConsole);
@@ -459,10 +459,12 @@ LLConsole.setVisibility(View.VISIBLE);
                 }
             }
             TextView UserName=(TextView)findViewById(R.id.textViewName);
-            TextView Email=(TextView)findViewById(R.id.textView7Email);
+            TextView Email=(TextView)findViewById(R.id.textView7Email7);
 
             UserName.setText(currentUser.getDisplayName());
             Email.setText(currentUser.getEmail());
+
+
         }
 
     SDM();
@@ -535,7 +537,7 @@ LLConsole.setVisibility(View.GONE);
     public void share(){
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, BlogTitle+" "+BlogURL+" . Shared via StartUpAgni App https://goo.gl/suxeTk");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, BlogTitle+" "+BlogURL+" . Shared via StartupAgni App https://goo.gl/suxeTk");
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
     }
