@@ -39,6 +39,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -414,8 +415,8 @@ int h=100;
                     String value = dataSnapshot.getValue(String.class);
                     Log.d(TAG, "Value is: " + value);
                     if (value != null) {
+                        //Picasso.with(MainActivity.this).load(value).into(img);
                         Glide.with(MainActivity.this).load(value).into(img);
-
                     }
 
                 }
@@ -454,8 +455,11 @@ LLConsole.setVisibility(View.VISIBLE);
                     // Picasso.with(this).load(ProfilePicUrl).into(ProfilePic);
                     ProfilePictureView profilePictureView;
                     profilePictureView = (ProfilePictureView) findViewById(R.id.friendProfilePicture);
-                    profilePictureView.setProfileId(ProfileID);
+                   if(ProfileID.equals(null)) {
 
+                   }else {
+                       profilePictureView.setProfileId(ProfileID);
+                   }
                 }
             }
             TextView UserName=(TextView)findViewById(R.id.textViewName);
@@ -571,6 +575,7 @@ public void AdsLoad(){
 
         @Override
         public void onAdClosed() {
+
             finish();
             // Code to be executed when when the interstitial ad is closed.
         }

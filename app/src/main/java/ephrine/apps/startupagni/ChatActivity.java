@@ -25,7 +25,6 @@ import com.facebook.Profile;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,6 +34,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 
@@ -217,6 +217,8 @@ AdsLoad();
 
                             ImageView Pic=(ImageView)findViewById(R.id.imageView8ProfilePic);
                             Glide.with(ChatActivity.this).load(value).into(Pic);
+                           // Picasso.with(ChatActivity.this).load(value).into(Pic);
+
 
 
                         }
@@ -475,7 +477,11 @@ AdsLoad();
             DatabaseReference EmailData = database.getReference("app/chat/" + ChatTotal + "/email");
             EmailData.setValue(Email);
             DatabaseReference ProfilePicData = database.getReference("app/chat/" + ChatTotal + "/pic");
-ProfilePicData.setValue(ProfilePicUrl);
+if(ProfilePicUrl!=null){
+    ProfilePicData.setValue(ProfilePicUrl);
+}else {
+
+}
 
 
             MsgBox.setText("");
@@ -544,15 +550,21 @@ ProfilePicData.setValue(ProfilePicUrl);
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.slidedown);
         CardView ChatCardViewProfile = findViewById(R.id.ChatCardViewProfile);
+       final TextView NameTx = findViewById(R.id.textViewUserName);
+       final TextView EmailTx = findViewById(R.id.textViewUserEmail);
+        final Drawable ProfilePic = getDrawable(R.drawable.com_facebook_profile_picture_blank_square);
+        final ImageView Pic=(ImageView)findViewById(R.id.imageView8ProfilePic);
 
-        animation.setAnimationListener(new Animation.AnimationListener() {
+animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
+                NameTx.setText("Loading...");
+                EmailTx.setText("Loading..");
+                Pic.setImageDrawable(ProfilePic);
                 View ProfileChat = findViewById(R.id.ViewChatProfilePopUp);
                 ProfileChat.setVisibility(View.GONE);
 
@@ -604,8 +616,11 @@ ProfilePicData.setValue(ProfilePicUrl);
                 //  ProfilePictureView profilePictureView;
                 //profilePictureView = (ProfilePictureView) findViewById(R.id.friendProfilePicture);
                 //profilePictureView.setProfileId(ProfileID);
-ProfilePicUrl="http://graph.facebook.com/"+ProfileID+"/picture?type=large&width=720&height=720";
-Log.d(TAG,"FB Profile Pic URL: " + ProfilePicUrl);
+                if(ProfileID.equals(null)){}
+                else{
+                    ProfilePicUrl="http://graph.facebook.com/"+ProfileID+"/picture?type=large&width=720&height=720";
+                    Log.d(TAG,"FB Profile Pic URL: " + ProfilePicUrl);
+                }
             }
         }
     }

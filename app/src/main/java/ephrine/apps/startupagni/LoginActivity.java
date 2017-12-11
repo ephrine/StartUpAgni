@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Base64;
 import android.util.Log;
@@ -60,7 +61,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 123;
 
@@ -189,8 +190,8 @@ public void Account(){
     for (UserInfo user: FirebaseAuth.getInstance().getCurrentUser().getProviderData()) {
         if (user.getProviderId().equals("facebook.com")) {
             System.out.println("User is signed in with Facebook");
-            String ProfileID= Profile.getCurrentProfile().getId().toString();
-            String ProfilePicUrl="http://graph.facebook.com/"+ProfileID+"+/picture?type=small";
+          //  String ProfileID= Profile.getCurrentProfile().getId().toString();
+            //String ProfilePicUrl="http://graph.facebook.com/"+ProfileID+"+/picture?type=small";
             // Picasso.with(this).load(ProfilePicUrl).into(ProfilePic);
 
 

@@ -23,9 +23,12 @@ This blog aims to be a one-stop destination for all the budding entrepreneurs by
 
     <!-- Ads IDs-->
 
-<!-- Original Ad IDs-->
+<!-- Original Ad IDs -->
+ <string name="Ads_app_id">ca-app-pub-6702661245453687~7275376132</string>
+    <string name="Ads_app_banner_unit_id">ca-app-pub-6702661245453687/9073465544</string>
+    <string name="Ads_app_int_unit_id">ca-app-pub-6702661245453687/1145082055</string>
       -->
-    <!-- Test Ad IDS
+    <!-- Test Ad IDS-
     <string name="Ads_app_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="Ads_app_banner_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="Ads_app_int_unit_id">ca-app-pub-3940256099942544/1033173712</string>
